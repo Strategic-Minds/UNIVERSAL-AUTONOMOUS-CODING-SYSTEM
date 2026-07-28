@@ -1,0 +1,34 @@
+name: Supabase Sync Check
+on:
+  push:
+    branches: [main]
+    paths: ['supabase/**']
+  workflow_dispatch:
+
+jobs:
+  supabase-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: List migration files
+        run: |
+          echo "=== Supabase Migrations ==="
+          ls -la supabase/migrations/ || echo "No migrations directory"
+          
+      - name: Verify migration SQL
+        run: |
+          if [ -f supabase/migrations/20260727000000_uacs_schema.sql ]; then
+            echo "✅ Migration file exists"
+            wc -l supabase/migrations/20260727000000_uacs_schema.sql
+          else
+            echo "❌ Migration file MISSING"
+            exit 1
+          fi
+          
+      - name: Post sync summary
+        run: |
+          echo "=== Supabase Sync Summary ==="
+          echo "Project: prhppuuwcnmfdhwsagug"
+          echo "Dashboard: https://supabase.com/dashboard/project/prhppuuwcnmfdhwsagug/editor"
+          echo "Action required: Paste migration SQL in SQL editor"
