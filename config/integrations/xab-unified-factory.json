@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0.0",
+  "integration_id": "XAB-UACS-UNIFIED-FACTORY",
+  "command_center": {
+    "name": "Xtreme AI Builder",
+    "repo": "Strategic-Minds/XAB",
+    "draft_pr": "https://github.com/Strategic-Minds/XAB/pull/9",
+    "role": "operator intake, project command center, approvals, evidence and release decisions"
+  },
+  "execution_bus": {
+    "name": "AUTO BUILDER 2 MCP",
+    "endpoint": "https://auto-builder-livid.vercel.app/api/mcp",
+    "primary_tool": "run_universal_job",
+    "role": "governed provisioning, workflow execution, receipts and rollback"
+  },
+  "orchestrator": {
+    "name": "Base44 APEX",
+    "app_id": "6a4ae522852a5e08bfa42450",
+    "role": "registries, queues, agent packets, coding coordination and repair routing"
+  },
+  "creative_director": {
+    "name": "GPT Business",
+    "role": "discovery, specifications, exactly three brand packs, exactly three web packs, copy, approved visual source truth and independent parity review"
+  },
+  "validation_authority": {
+    "name": "BrowserWorker",
+    "repo": "Strategic-Minds/BROWSERWORKER",
+    "mandatory": true,
+    "desktop_visual_parity_minimum": 99,
+    "tablet_visual_parity_minimum": 99,
+    "mobile_visual_parity_minimum": 99,
+    "operational_parity_required": 100
+  },
+  "uacs_role": "sandbox-first reusable build protocol and draft-PR promotion system",
+  "promotion_policy": "draft_pr_only",
+  "production_policy": "explicit_operator_approval",
+  "missing_evidence_policy": "fail",
+  "protected_actions": [
+    "production_deploy",
+    "merge_protected_branch",
+    "production_database_migration",
+    "secret_mutation",
+    "domain_change",
+    "spend",
+    "customer_message",
+    "public_publish",
+    "destructive_action"
+  ]
+}
