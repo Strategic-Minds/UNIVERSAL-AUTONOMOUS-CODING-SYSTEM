@@ -1,0 +1,30 @@
+{
+  "schema": "strategic-minds.uacs-template.v1",
+  "template_slug": "uacs",
+  "name": "Universal Autonomous Coding System",
+  "status": "read_only_template",
+  "command_authority": "Strategic-Minds/XAB",
+  "execution_runtime": "Strategic-Minds/AUTOBUILDER-V2",
+  "canonical_repository": "Strategic-Minds/UNIVERSAL-AUTONOMOUS-CODING-SYSTEM",
+  "sandbox_repository": "Strategic-Minds/UNIVERSAL-AUTONOMOUS-CODING-SYSTEM-SANDBOX",
+  "validator": "Strategic-Minds/BROWSERWORKER",
+  "vercel_sandbox_project": "uacs-autonomous-sandbox",
+  "drive_source_folder_id": "1YGRIyXMudI6zYtVjCv_7I4WfuStKzK7A",
+  "drive_control_folder_id": "1oCOk11T646vZqHfEmS1vnClXoVPG_3bU",
+  "factory_write_policy": "generated output must be copied to a new repository or feature branch",
+  "canonical_main_write_policy": "operator-approved template maintenance only",
+  "approval_manifest": "xab.approval-manifest.v1",
+  "validation": {
+    "desktop_visual_parity": 99,
+    "tablet_visual_parity": 99,
+    "mobile_visual_parity": 99,
+    "operational_parity": 100,
+    "max_repair_iterations": 5,
+    "browserworker_required": true
+  },
+  "release": {
+    "default": "preview_only",
+    "protected_merge": "operator_approval_required",
+    "production": "operator_approval_required"
+  }
+}
