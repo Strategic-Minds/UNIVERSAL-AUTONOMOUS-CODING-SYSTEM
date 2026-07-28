@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "control_id": "UACS-SYNC-20260727",
-  "status": "partial_sync_governed_bootstrap",
+  "status": "partial_sync_governed_hardening",
   "primary_operator": {
     "name": "Jeremy Bensen",
     "primary_email": "jeremy@strategicmindsai.com",
@@ -10,10 +10,25 @@
     "github_login": "xps-admin"
   },
   "authorities": {
-    "business_source_truth": {
+    "corporate_drive_root": {
       "system": "google_drive",
       "folder_name": "XTREME-AI-SYSTEMS",
-      "folder_id": "11X5JejU_8EYEMYOh0yLCgBlyVw4EGh_B"
+      "folder_id": "11X5JejU_8EYEMYOh0yLCgBlyVw4EGh_B",
+      "drive_id": "0AHFE3rDHDuWSUk9PVA"
+    },
+    "uacs_business_source_truth": {
+      "system": "google_drive",
+      "folder_name": "UACS — UNIVERSAL AUTONOMOUS CODING SYSTEM",
+      "folder_id": "1YGRIyXMudI6zYtVjCv_7I4WfuStKzK7A",
+      "parent_folder_id": "1CdyQ-6fSe-ll6FtY9uQdtl0v1qJb6GHI",
+      "drive_id": "0AHFE3rDHDuWSUk9PVA",
+      "write_policy": "corporate_shared_drive_members_only"
+    },
+    "legacy_uacs_drive": {
+      "folder_id": "1sDhkd1r1wGn-V3tzRM-f0b4CsG-Kleys",
+      "status": "legacy_security_risk",
+      "reason": "anyone_with_link_writer_permission_detected",
+      "write_policy": "do_not_use_as_canonical"
     },
     "technical_source_truth": {
       "system": "github",
@@ -45,7 +60,9 @@
     },
     "communications": {
       "system": "slack",
-      "control_channel": "pending",
+      "control_channel_name": "uacs-bid-fast-control",
+      "control_channel_id": "C0BKRMY5LBZ",
+      "chatgpt_connector_state": "connected",
       "base44_connector_state": "not_connected"
     },
     "chatgpt_business": {
