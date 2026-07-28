@@ -1,0 +1,47 @@
+name: Drive Sync
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 13 * * *'  # 9am EST daily
+  workflow_dispatch:
+
+jobs:
+  sync-to-drive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Write sync state to Drive
+        env:
+          GOOGLEDRIVE_ACCESS_TOKEN: ${{ secrets.GOOGLEDRIVE_ACCESS_TOKEN }}
+          UACS_DRIVE_FOLDER_ID: 1sDhkd1r1wGn-V3tzRM-f0b4CsG-Kleys
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: |
+          python3 - << 'PYEOF'
+import urllib.request, urllib.parse, json, os
+
+TOKEN = os.environ.get('GOOGLEDRIVE_ACCESS_TOKEN','')
+FOLDER = os.environ.get('UACS_DRIVE_FOLDER_ID','1sDhkd1r1wGn-V3tzRM-f0b4CsG-Kleys')
+SHA = os.environ.get('GITHUB_SHA','')
+RUN = os.environ.get('GITHUB_RUN_ID','')
+
+if not TOKEN:
+    print("No Drive token — skipping")
+    exit(0)
+
+boundary = 'sync_boundary'
+content = json.dumps({"last_github_sync": "$(date -u +%Y-%m-%dT%H:%M:%SZ)", "commit_sha": SHA, "run_id": RUN, "repo": "Strategic-Minds/UNIVERSAL-AUTONOMOUS-CODING-SYSTEM", "status": "synced"}, indent=2)
+meta = json.dumps({"name": "github-sync-state.json", "parents": [FOLDER]})
+body = f"--{boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n{meta}\r\n--{boundary}\r\nContent-Type: text/plain\r\n\r\n{content}\r\n--{boundary}--".encode()
+url = "https://www.googleapis.com/upload/drive/v3/files?" + urllib.parse.urlencode({"uploadType": "multipart"})
+req = urllib.request.Request(url, method="POST", data=body)
+req.add_header("Authorization", f"Bearer {TOKEN}")
+req.add_header("Content-Type", f"multipart/related; boundary={boundary}")
+try:
+    with urllib.request.urlopen(req, timeout=15) as r:
+        print(f"Drive sync OK: {r.status}")
+except Exception as e:
+    print(f"Drive sync failed: {e}")
+PYEOF
