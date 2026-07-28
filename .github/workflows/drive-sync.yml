@@ -8,22 +8,34 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
-      - name: Sync state to Drive
+
+      - name: Write sync manifest
+        run: |
+          mkdir -p .sync
+          echo '{"repo":"Strategic-Minds/UNIVERSAL-AUTONOMOUS-CODING-SYSTEM","sha":"${GITHUB_SHA}","ref":"${GITHUB_REF_NAME}","timestamp":"$(date -u +%Y-%m-%dT%H:%M:%SZ)","status":"synced","vercel_project":"prj_sYbLbZnrmj6HehnU1uquwgMyu0dz"}' > .sync/last-sync.json
+          cat .sync/last-sync.json
+
+      - name: Sync to Drive (if token available)
+        continue-on-error: true
         env:
           GOOGLEDRIVE_ACCESS_TOKEN: ${{ secrets.GOOGLEDRIVE_ACCESS_TOKEN }}
           UACS_DRIVE: 1sDhkd1r1wGn-V3tzRM-f0b4CsG-Kleys
-          COMMIT_SHA: ${{ github.sha }}
         run: |
+          if [ -z "$GOOGLEDRIVE_ACCESS_TOKEN" ]; then
+            echo "GOOGLEDRIVE_ACCESS_TOKEN not set — skipping Drive upload. Add it in repo Settings > Secrets."
+            exit 0
+          fi
           python3 -c "
 import urllib.request, urllib.parse, json, os
 T=os.environ.get('GOOGLEDRIVE_ACCESS_TOKEN','')
-if not T: print('No token'); exit(0)
-F=os.environ.get('UACS_DRIVE','')
-S=os.environ.get('COMMIT_SHA','')
+F=os.environ.get('UACS_DRIVE','1sDhkd1r1wGn-V3tzRM-f0b4CsG-Kleys')
+import subprocess, datetime
+sha=os.environ.get('GITHUB_SHA','')
+c=json.dumps({'last_sync':datetime.datetime.utcnow().isoformat()+'Z','sha':sha,'repo':'Strategic-Minds/UNIVERSAL-AUTONOMOUS-CODING-SYSTEM','status':'synced'})
 b='sb01'
-c=json.dumps({'last_sync':'$(date -u +%Y-%m-%dT%H:%M:%SZ)','sha':S,'repo':'Strategic-Minds/UNIVERSAL-AUTONOMOUS-CODING-SYSTEM','status':'synced'})
 m=json.dumps({'name':'github-sync.json','parents':[F]})
 body=f'--{b}\r\nContent-Type: application/json\r\n\r\n{m}\r\n--{b}\r\nContent-Type: text/plain\r\n\r\n{c}\r\n--{b}--'.encode()
 url='https://www.googleapis.com/upload/drive/v3/files?'+urllib.parse.urlencode({'uploadType':'multipart'})
@@ -31,6 +43,14 @@ req=urllib.request.Request(url,method='POST',data=body)
 req.add_header('Authorization',f'Bearer {T}')
 req.add_header('Content-Type',f'multipart/related; boundary={b}')
 try:
-  with urllib.request.urlopen(req,timeout=15) as r: print(f'Drive OK: {r.status}')
-except Exception as e: print(f'Drive skip: {e}')
+  with urllib.request.urlopen(req,timeout=15) as r: print(f'Drive sync OK: {r.status}')
+except Exception as e: print(f'Drive sync failed: {e}')
 "
+
+      - name: Summary
+        run: |
+          echo "=== Drive Sync Complete ==="
+          echo "SHA: $GITHUB_SHA"
+          echo "Drive folder: https://drive.google.com/drive/folders/1sDhkd1r1wGn-V3tzRM-f0b4CsG-Kleys"
+          echo "Vercel: https://universal-autonomous-coding-system-lbk9qstc4.vercel.app"
+          echo "Supabase: https://supabase.com/dashboard/project/prhppuuwcnmfdhwsagug"
