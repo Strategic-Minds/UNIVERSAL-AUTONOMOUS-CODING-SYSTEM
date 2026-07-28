@@ -1,100 +1,58 @@
 {
   "version": "1.0.0",
   "system": "Universal Autonomous Coding System",
-  "owner": "Jeremy Bensen — Strategic Minds Advisory AI",
-  
+  "owner": "Jeremy Bensen \u2014 Strategic Minds Advisory AI",
+  "infrastructure": {
+    "github_repo": "https://github.com/Strategic-Minds/UNIVERSAL-AUTONOMOUS-CODING-SYSTEM",
+    "github_is_template": true,
+    "vercel_project_id": "prj_sYbLbZnrmj6HehnU1uquwgMyu0dz",
+    "vercel_url": "https://universal-autonomous-coding-system.vercel.app",
+    "supabase_ref": "prhppuuwcnmfdhwsagug",
+    "supabase_url": "https://prhppuuwcnmfdhwsagug.supabase.co",
+    "supabase_dashboard": "https://supabase.com/dashboard/project/prhppuuwcnmfdhwsagug/editor",
+    "drive_folder_id": "1sDhkd1r1wGn-V3tzRM-f0b4CsG-Kleys",
+    "drive_folder_url": "https://drive.google.com/drive/folders/1sDhkd1r1wGn-V3tzRM-f0b4CsG-Kleys",
+    "drive_subfolders": {
+      "01-SPECS": "1waRQiiJOJWqzzvnzvnVy6JC-8MvNnn8l",
+      "02-BRAND-CHATGPT": "1871oJyEvHxLYh-K8Hk9FUMZxdt68VfKd",
+      "03-BUILDS": "1lCckFopr5b55cT7emr7Zdb43AaPqDYZL",
+      "04-QA-REPORTS": "11r_gfx1Jo03W5pt7rmS3LVFr178KAanT",
+      "05-TEMPLATES": "1yQ6rcro6EC8kB9b9TZ4p5pi9G-YwVI91",
+      "06-DEPLOYMENTS": "10Jbc44bkg_H2kFMyuQVG2MHrDgKzYtER",
+      "07-MIGRATIONS": "1M1CLgMEmY4pxKd63BzJHjFBqrVIBWeYN",
+      "08-RECEIPTS": "1lJznDOUllkVMD_RN_yreUKcdGs02RgeM"
+    },
+    "browserworker_url": "https://browserworker-j4homeh5w-strategic-minds-advisory.vercel.app",
+    "chatgpt_bridge_url": "https://xtreme-ai-bridge.vercel.app"
+  },
   "agents": {
     "apex": {
-      "name": "APEX",
-      "role": "Orchestrator + Builder",
-      "platform": "Base44 Superagent",
-      "responsibilities": [
-        "Spec generation from ideas",
-        "Next.js/TypeScript code generation",
-        "Supabase schema + migrations",
-        "GitHub push + branch management",
-        "Vercel deployment",
-        "Queue management",
-        "Error detection + auto-healing",
-        "Deploy notifications via WhatsApp"
-      ]
+      "platform": "Base44",
+      "role": "Orchestrator + Builder"
     },
     "chatgpt": {
-      "name": "ChatGPT",
+      "platform": "OpenAI",
       "role": "Visual Director",
-      "bridge_url": "https://xtreme-ai-bridge.vercel.app",
-      "responsibilities": [
-        "Logo design (SVG + PNG pack)",
-        "Brand identity (colors, typography, voice)",
-        "Screen mockup generation (all routes)",
-        "Visual parity validation (99% target)",
-        "Marketing copy + headlines"
-      ]
+      "bridge": "https://xtreme-ai-bridge.vercel.app"
     },
     "browserworker": {
-      "name": "BrowserWorker",
+      "platform": "Vercel",
       "role": "QA Engineer",
-      "url": "https://browserworker-j4homeh5w-strategic-minds-advisory.vercel.app",
-      "responsibilities": [
-        "Headless E2E screenshot capture",
-        "Form submission testing",
-        "API endpoint health checks",
-        "PageSpeed audit (≥85 perf, ≥95 a11y, ≥95 SEO)",
-        "Mobile + desktop responsive testing",
-        "Visual diff against approved mockups"
-      ]
+      "url": "https://browserworker-j4homeh5w-strategic-minds-advisory.vercel.app"
     }
   },
-
   "faang_gate": {
-    "pass1_code_quality": { "weight": 25, "checks": ["TypeScript", "ESLint", "no-console-logs", "no-todos"] },
-    "pass2_visual_parity": { "weight": 25, "target_pct": 99, "checks": ["desktop", "mobile", "colors", "typography", "animations"] },
-    "pass3_functional": { "weight": 25, "checks": ["all-routes-200", "forms-work", "api-responds", "auth-flows"] },
-    "pass4_performance": { "weight": 25, "checks": ["pagespeed-85", "a11y-95", "seo-95", "no-layout-shift"] },
     "ship_threshold": 90,
-    "auto_heal_max_iterations": 3
+    "pass1_max": 25,
+    "pass2_max": 25,
+    "pass3_max": 25,
+    "pass4_max": 25
   },
-
-  "tech_stack": {
-    "framework": "Next.js 14 (App Router)",
-    "language": "TypeScript",
-    "styling": "Tailwind CSS + UACS Design System",
-    "database": "Supabase (PostgreSQL + RLS)",
-    "hosting": "Vercel",
-    "testing": "Playwright (E2E) + Jest (unit) + BrowserWorker (visual)",
-    "auth": "Supabase Auth"
-  },
-
-  "design_system": {
-    "sidebar_color": "#000000",
-    "sidebar_width": "240px",
-    "gold_cta": "#f8b800",
-    "page_bg": "#f0f0f0",
-    "card_bg": "#ffffff",
-    "font": "Inter",
-    "topbar_height": "64px"
-  },
-
-  "pipeline_phases": [
-    "idea",
-    "spec",
-    "brand_chatgpt",
-    "visual_approval",
-    "build",
-    "validation_browserworker",
-    "faang_gate",
-    "deploy_production"
-  ],
-
-  "notification_channels": {
-    "whatsapp": "+15559730487",
-    "slack_channel": "#apex-builds"
-  },
-
-  "templates": [
-    { "id": "city-site", "name": "City Epoxy Site", "type": "landing-page", "reuse_pct": 80 },
-    { "id": "saas-dashboard", "name": "SaaS Dashboard", "type": "web-app", "reuse_pct": 70 },
-    { "id": "crm-dashboard", "name": "CRM Dashboard", "type": "web-app", "reuse_pct": 65 },
-    { "id": "landing-page", "name": "Marketing Landing", "type": "landing-page", "reuse_pct": 75 }
-  ]
+  "first_project": {
+    "name": "Xtreme Takeoff",
+    "repo": "Strategic-Minds/XTREME-TAKEOFFS",
+    "preview": "https://xtreme-takeoffs-bkeg7bdd0-strategic-minds-advisory.vercel.app",
+    "status": "build",
+    "priority": "P1"
+  }
 }
