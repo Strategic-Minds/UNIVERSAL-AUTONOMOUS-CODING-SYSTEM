@@ -1,22 +1,31 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "integration_id": "XAB-UACS-UNIFIED-FACTORY",
+  "operator_decision": "Xtreme AI Builder MCP is the primary MCP that operates the unified autonomous factory.",
   "command_center": {
     "name": "Xtreme AI Builder",
     "repo": "Strategic-Minds/XAB",
     "draft_pr": "https://github.com/Strategic-Minds/XAB/pull/9",
     "role": "operator intake, project command center, approvals, evidence and release decisions"
   },
-  "execution_bus": {
+  "primary_operating_mcp": {
+    "name": "Xtreme AI Builder MCP",
+    "namespace": "Xtreme_AI_Builder",
+    "plugin_id": "dev-6a633e9ec62c8191aec60a9799309021",
+    "primary_tool": "run_universal_job",
+    "role": "governed orchestration, dispatch, capability routing, provisioning coordination, receipts, rollback and persistent synchronization",
+    "current_connector_state": "namespace recognized; callable tool schema not exposed in the current session"
+  },
+  "compatibility_executor": {
     "name": "AUTO BUILDER 2 MCP",
     "endpoint": "https://auto-builder-livid.vercel.app/api/mcp",
-    "primary_tool": "run_universal_job",
-    "role": "governed provisioning, workflow execution, receipts and rollback"
+    "authority": "subordinate",
+    "role": "provider-specific compatibility execution only when invoked by Xtreme AI Builder MCP or explicitly authorized by the operator"
   },
   "orchestrator": {
     "name": "Base44 APEX",
     "app_id": "6a4ae522852a5e08bfa42450",
-    "role": "registries, queues, agent packets, coding coordination and repair routing"
+    "role": "registries, queues, agent packets, coding coordination and repair routing under Xtreme AI Builder MCP governance"
   },
   "creative_director": {
     "name": "GPT Business",
