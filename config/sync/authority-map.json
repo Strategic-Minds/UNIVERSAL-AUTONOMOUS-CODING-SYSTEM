@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "control_id": "UACS-SYNC-20260727",
+  "status": "partial_sync_governed_bootstrap",
+  "primary_operator": {
+    "name": "Jeremy Bensen",
+    "primary_email": "jeremy@strategicmindsai.com",
+    "business_email": "jeremy@nationalconcretepolishing.net",
+    "github_email": "strategicmindsadvisory@gmail.com",
+    "github_login": "xps-admin"
+  },
+  "authorities": {
+    "business_source_truth": {
+      "system": "google_drive",
+      "folder_name": "XTREME-AI-SYSTEMS",
+      "folder_id": "11X5JejU_8EYEMYOh0yLCgBlyVw4EGh_B"
+    },
+    "technical_source_truth": {
+      "system": "github",
+      "repository": "Strategic-Minds/UNIVERSAL-AUTONOMOUS-CODING-SYSTEM",
+      "default_branch": "main",
+      "write_policy": "feature_branch_and_draft_pr"
+    },
+    "orchestration": {
+      "system": "base44",
+      "app_name": "Xtreme AI Builder",
+      "app_id": "6a4ae522852a5e08bfa42450"
+    },
+    "runtime": {
+      "system": "vercel",
+      "team_id": "team_aFdds8lsbHMwe2ip4aQdbQ3d",
+      "project_id": "prj_sYbLbZnrmj6HehnU1uquwgMyu0dz",
+      "project_name": "universal-autonomous-coding-system"
+    },
+    "intended_database": {
+      "system": "supabase",
+      "project_ref": "prhppuuwcnmfdhwsagug",
+      "connector_state": "not_visible_to_current_supabase_connector",
+      "write_policy": "blocked_until_verified"
+    },
+    "connected_supabase_non_authoritative": {
+      "project_ref": "azajysheebfhyzoyplpf",
+      "project_name": "supabase-blue-zebra",
+      "write_policy": "do_not_use_for_uacs_without_approval"
+    },
+    "communications": {
+      "system": "slack",
+      "control_channel": "pending",
+      "base44_connector_state": "not_connected"
+    },
+    "chatgpt_business": {
+      "role": "operator_interface_and_connector_client",
+      "durable_source_of_truth": false
+    }
+  },
+  "account_observations": {
+    "gmail_calendar_contacts": "jeremy@strategicmindsai.com",
+    "slack": "jeremy@strategicmindsai.com",
+    "github": "xps-admin / strategicmindsadvisory@gmail.com",
+    "base44_drive_calendar_sheets": "jeremy@strategicmindsai.com",
+    "base44_gmail": "leads@nationalepoxypros.com",
+    "chatgpt_drive_connector": "shared access through a different authenticated Google account"
+  },
+  "last_verified_at": "2026-07-27T21:15:00-04:00"
+}
