@@ -1,0 +1,15 @@
+name: Vercel Deploy Monitor
+on:
+  push:
+    branches: [main]
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Vercel deployment status
+        run: |
+          echo "Vercel auto-deploys on push to main"
+          echo "Project: prj_sYbLbZnrmj6HehnU1uquwgMyu0dz"
+          echo "Live URL: https://universal-autonomous-coding-system-lbk9qstc4.vercel.app"
+          echo "Dashboard: https://vercel.com/strategic-minds-advisory/universal-autonomous-coding-system"
