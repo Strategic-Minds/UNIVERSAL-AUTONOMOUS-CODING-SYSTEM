@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0.0",
+  "mode": "governed",
+  "default_direction": "bidirectional_when_verified",
+  "current_state": "bootstrap_only",
+  "heartbeat": {
+    "target_platform": "vercel_workflow_or_cron",
+    "target_interval_minutes": 5,
+    "status": "not_provisioned",
+    "proof_required": [
+      "workflow_id",
+      "deployment_id",
+      "successful_run_id",
+      "receipt_url"
+    ]
+  },
+  "defaults": {
+    "production_auto_ship": false,
+    "default_deployment_target": "preview",
+    "protected_branch_writes": false,
+    "customer_outbound": false,
+    "database_ddl": false,
+    "secret_mutation": false,
+    "paid_resource_creation": false,
+    "conflict_action": "quarantine",
+    "receipt_required": true,
+    "rollback_reference_required": true
+  },
+  "record_contract": {
+    "required_metadata": [
+      "source_system",
+      "source_id",
+      "source_updated_at",
+      "sync_version",
+      "content_hash",
+      "last_synced_at",
+      "sync_status"
+    ],
+    "idempotency_key": "source_system:source_id:sync_version",
+    "delete_policy": "tombstone_only_until_separately_approved"
+  },
+  "lanes": [
+    {
+      "name": "drive_github",
+      "direction": "bidirectional",
+      "enabled": false,
+      "activation_gate": "approved_path_map_and_round_trip_test"
+    },
+    {
+      "name": "github_vercel",
+      "direction": "github_to_vercel",
+      "enabled": true,
+      "allowed_target": "preview",
+      "production_gate": "explicit_operator_approval"
+    },
+    {
+      "name": "vercel_registry_receipts",
+      "direction": "vercel_to_drive_and_base44",
+      "enabled": false,
+      "activation_gate": "workflow_provisioned"
+    },
+    {
+      "name": "base44_github",
+      "direction": "bidirectional",
+      "enabled": false,
+      "activation_gate": "branch_only_adapter_and_test"
+    },
+    {
+      "name": "base44_supabase",
+      "direction": "bidirectional",
+      "enabled": false,
+      "activation_gate": "intended_project_visible_and_schema_approved"
+    },
+    {
+      "name": "slack_control",
+      "direction": "systems_to_slack",
+      "enabled": false,
+      "activation_gate": "channel_exists_and_base44_oauth_connected"
+    },
+    {
+      "name": "gmail_control",
+      "direction": "gmail_to_classification_and_drafts",
+      "enabled": false,
+      "activation_gate": "approved_account_and_message_policy"
+    },
+    {
+      "name": "calendar_control",
+      "direction": "bidirectional_for_approved_deadlines",
+      "enabled": false,
+      "activation_gate": "event_mapping_and_deduplication_test"
+    },
+    {
+      "name": "contacts_resolution",
+      "direction": "read_only",
+      "enabled": true,
+      "activation_gate": "none"
+    }
+  ],
+  "dead_letter": {
+    "enabled": true,
+    "max_attempts": 3,
+    "notify_on_exhaustion": true
+  }
+}

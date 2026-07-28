@@ -1,58 +1,78 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "system": "Universal Autonomous Coding System",
-  "owner": "Jeremy Bensen \u2014 Strategic Minds Advisory AI",
+  "owner": "Jeremy Bensen / Strategic Minds Advisory AI",
+  "governance_status": "sandbox_first_operator_gated",
   "infrastructure": {
     "github_repo": "https://github.com/Strategic-Minds/UNIVERSAL-AUTONOMOUS-CODING-SYSTEM",
     "github_is_template": true,
     "vercel_project_id": "prj_sYbLbZnrmj6HehnU1uquwgMyu0dz",
     "vercel_url": "https://universal-autonomous-coding-system.vercel.app",
     "supabase_ref": "prhppuuwcnmfdhwsagug",
-    "supabase_url": "https://prhppuuwcnmfdhwsagug.supabase.co",
-    "supabase_dashboard": "https://supabase.com/dashboard/project/prhppuuwcnmfdhwsagug/editor",
-    "drive_folder_id": "1sDhkd1r1wGn-V3tzRM-f0b4CsG-Kleys",
-    "drive_folder_url": "https://drive.google.com/drive/folders/1sDhkd1r1wGn-V3tzRM-f0b4CsG-Kleys",
-    "drive_subfolders": {
-      "01-SPECS": "1waRQiiJOJWqzzvnzvnVy6JC-8MvNnn8l",
-      "02-BRAND-CHATGPT": "1871oJyEvHxLYh-K8Hk9FUMZxdt68VfKd",
-      "03-BUILDS": "1lCckFopr5b55cT7emr7Zdb43AaPqDYZL",
-      "04-QA-REPORTS": "11r_gfx1Jo03W5pt7rmS3LVFr178KAanT",
-      "05-TEMPLATES": "1yQ6rcro6EC8kB9b9TZ4p5pi9G-YwVI91",
-      "06-DEPLOYMENTS": "10Jbc44bkg_H2kFMyuQVG2MHrDgKzYtER",
-      "07-MIGRATIONS": "1M1CLgMEmY4pxKd63BzJHjFBqrVIBWeYN",
-      "08-RECEIPTS": "1lJznDOUllkVMD_RN_yreUKcdGs02RgeM"
-    },
+    "supabase_status": "blocked_until_current_connector_verifies_authority",
+    "corporate_drive_folder_id": "1YGRIyXMudI6zYtVjCv_7I4WfuStKzK7A",
+    "corporate_drive_folder_url": "https://drive.google.com/drive/folders/1YGRIyXMudI6zYtVjCv_7I4WfuStKzK7A",
+    "legacy_drive_folder_id": "1sDhkd1r1wGn-V3tzRM-f0b4CsG-Kleys",
+    "legacy_drive_status": "retire_after_public_writer_permission_is_removed",
+    "browserworker_repo": "Strategic-Minds/BROWSERWORKER",
     "browserworker_url": "https://browserworker-j4homeh5w-strategic-minds-advisory.vercel.app",
     "chatgpt_bridge_url": "https://xtreme-ai-bridge.vercel.app"
+  },
+  "sandbox": {
+    "required": true,
+    "github_repo": "Strategic-Minds/UNIVERSAL-AUTONOMOUS-CODING-SYSTEM-SANDBOX",
+    "github_repo_id": "1314456862",
+    "drive_folder_id": "1oCOk11T646vZqHfEmS1vnClXoVPG_3bU",
+    "drive_folder_url": "https://drive.google.com/drive/folders/1oCOk11T646vZqHfEmS1vnClXoVPG_3bU",
+    "vercel_project_id": "prj_RE8lepQbj636rsHdJGO29KS0Pbao",
+    "vercel_project_name": "uacs-autonomous-sandbox",
+    "preview_only": true,
+    "custom_domain": false,
+    "production_enabled": false,
+    "promotion_mode": "draft_pr_to_canonical_only"
   },
   "agents": {
     "apex": {
       "platform": "Base44",
-      "role": "Orchestrator + Builder"
+      "app_id": "6a4ae522852a5e08bfa42450",
+      "role": "Orchestrator, queue manager, builder, repair router, and receipt registrar"
     },
     "chatgpt": {
       "platform": "OpenAI",
-      "role": "Visual Director",
+      "role": "Operator interface, visual director, system analyst, and connector client",
       "bridge": "https://xtreme-ai-bridge.vercel.app"
     },
     "browserworker": {
       "platform": "Vercel",
-      "role": "QA Engineer",
-      "url": "https://browserworker-j4homeh5w-strategic-minds-advisory.vercel.app"
+      "repo": "Strategic-Minds/BROWSERWORKER",
+      "role": "Mandatory QA and browser evidence provider",
+      "required": true,
+      "missing_evidence_action": "block_promotion"
     }
   },
-  "faang_gate": {
-    "ship_threshold": 90,
-    "pass1_max": 25,
-    "pass2_max": 25,
-    "pass3_max": 25,
-    "pass4_max": 25
+  "quality_gate": {
+    "auto_ship": false,
+    "visual_parity_minimum": 99,
+    "visual_breakpoints": ["desktop", "tablet", "mobile"],
+    "operational_parity_required": 100,
+    "browserworker_required": true,
+    "zero_console_errors": true,
+    "zero_network_errors": true,
+    "accessibility_required": true,
+    "security_required": true,
+    "rollback_reference_required": true,
+    "receipt_required": true,
+    "max_repair_iterations": 5,
+    "production_operator_approval_required": true
   },
-  "first_project": {
-    "name": "Xtreme Takeoff",
-    "repo": "Strategic-Minds/XTREME-TAKEOFFS",
-    "preview": "https://xtreme-takeoffs-bkeg7bdd0-strategic-minds-advisory.vercel.app",
-    "status": "build",
-    "priority": "P1"
-  }
+  "blocked_actions_without_operator_approval": [
+    "production_deploy",
+    "production_domain_assignment",
+    "merge_to_protected_branch",
+    "secret_mutation",
+    "database_migration",
+    "paid_resource_creation",
+    "customer_message",
+    "destructive_delete"
+  ]
 }
