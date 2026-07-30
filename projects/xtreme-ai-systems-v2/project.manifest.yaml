@@ -1,0 +1,79 @@
+project:
+  id: XTREME-NATIONAL-CONSTRUCTION-OS
+  name: Xtreme AI National Construction Operating System
+  app_repo: XTREME-SYSTEMS/xtreme-ai-systems-v2
+  browser_worker_repo: XTREME-SYSTEMS/browserworker
+  production_domain: xtremeaisystems.com
+  proof_state: Florida
+
+source_truth:
+  app_branch: feat/national-intelligence-foundation-20260730
+  browser_worker_branch: feat/national-adapters-20260730
+  factory_branch: feat/xtreme-national-construction-os-20260730
+  jurisdiction_authority: US Census Gazetteer 2025
+  federal_opportunities: SAM.gov Opportunities API
+  federal_awards: USAspending API
+  lawful_access_only: true
+
+governance:
+  branch_required: true
+  pull_request_required: true
+  direct_main_write: false
+  production_publish_requires_approval: true
+  database_migration_execution_requires_approval: true
+  secret_change_requires_approval: true
+  destructive_change_requires_approval: true
+  external_message_requires_approval: true
+  financial_action_requires_approval: true
+  protected_membership_scraping_allowed: false
+  captcha_bypass_allowed: false
+
+work_packets:
+  - id: WP-01
+    name: National Jurisdiction Registry
+    owner: data-architect
+  - id: WP-02
+    name: Source Registry Factory
+    owner: research-scout
+  - id: WP-03
+    name: Adapter SDK
+    owner: backend-principal
+  - id: WP-04
+    name: Production Browser Worker
+    owner: automation-engineer
+  - id: WP-05
+    name: Florida Discovery-to-Award Proof
+    owner: qa-sentinel
+  - id: WP-06
+    name: State Wave Generator
+    owner: mission-controller
+
+validation:
+  required:
+    - lint
+    - typecheck
+    - unit
+    - integration
+    - contract
+    - e2e
+    - security
+    - provenance
+    - data_integrity
+    - visual
+    - rollback
+  synthetic_prefixes:
+    - AUDIT_TEST_
+    - E2E_TEST_
+    - FL_PROOF_
+  success_gates:
+    source_provenance_pct: 100
+    duplicate_project_rate_max_pct: 2
+    unsupported_claims: 0
+    unauthorized_external_actions: 0
+    unauthorized_financial_actions: 0
+
+release:
+  merge_after_validation: true
+  preview_before_publish: true
+  publish_requires_operator_approval: true
+  rollback_receipt_required: true
