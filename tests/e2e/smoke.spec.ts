@@ -28,7 +28,7 @@ test("root redirects to the command center without browser failures", async ({ p
     }
   });
 
-  await page.goto("/", { waitUntil: "networkidle" });
+  await page.goto("/", { waitUntil: "domcontentloaded" });
 
   await expect(page).toHaveURL(/\/dashboard\/?$/);
   await expect(page.getByRole("heading", { name: "Command Center" })).toBeVisible();
@@ -40,7 +40,7 @@ test("root redirects to the command center without browser failures", async ({ p
 });
 
 test("dashboard has no horizontal overflow at the active viewport", async ({ page }) => {
-  await page.goto("/dashboard", { waitUntil: "networkidle" });
+  await page.goto("/dashboard", { waitUntil: "domcontentloaded" });
   await expect(page.getByRole("heading", { name: "Command Center" })).toBeVisible();
 
   const dimensions = await page.evaluate(() => ({
