@@ -8,7 +8,10 @@ on:
       - "governance/**"
       - "validation/**"
   pull_request:
-    branches: [main]
+    branches:
+      - main
+      - "feat/**"
+      - "governance/**"
 
 permissions:
   contents: read
