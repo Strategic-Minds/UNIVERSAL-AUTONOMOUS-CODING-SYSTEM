@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("command center produces reviewable visual evidence", async ({ page }, testInfo) => {
-  await page.goto("/dashboard", { waitUntil: "networkidle" });
+  await page.goto("/dashboard", { waitUntil: "domcontentloaded" });
   await expect(page.getByRole("heading", { name: "Command Center" })).toBeVisible();
 
   const screenshot = await page.screenshot({ fullPage: true });
