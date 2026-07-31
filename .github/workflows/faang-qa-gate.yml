@@ -1,36 +1,80 @@
-name: FAANG QA Gate
+name: UACS Fail-Closed QA Gate
+
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - "feat/**"
+      - "governance/**"
+      - "validation/**"
   pull_request:
-    branches: [main]
+    branches:
+      - main
+      - "feat/**"
+      - "governance/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: uacs-qa-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   qa-gate:
+    name: Type, lint, test, build, browser, visual
     runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      CI: true
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://example.supabase.co' }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'ci-placeholder' }}
+
     steps:
-      - uses: actions/checkout@v4
-      
-      - uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node 20
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          
+          node-version: "20"
+
       - name: Install dependencies
         run: npm install --legacy-peer-deps
-        
-      - name: TypeScript check (Pass 1)
-        run: npx tsc --noEmit || true
-        
-      - name: ESLint check (Pass 1)
-        run: npx eslint . --ext .ts,.tsx --max-warnings 20 || true
-        
-      - name: Build check (Pass 3 — Functional)
-        run: npx next build
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-          
-      - name: Smoke test routes (Pass 3)
-        run: |
-          echo "Routes validated via build output"
-          echo "FAANG Gate Pass 3: Functional — COMPLETE"
+
+      - name: TypeScript
+        run: npm run typecheck
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Unit and governance contracts
+        run: npm run test:unit
+
+      - name: Dependency security
+        run: npm run test:security
+
+      - name: Production build
+        run: npm run build
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser E2E across desktop tablet and mobile
+        run: npm run test:e2e
+
+      - name: Visual evidence across desktop tablet and mobile
+        run: npm run test:visual
+
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: uacs-browser-evidence-${{ github.run_id }}
+          path: |
+            playwright-report/
+            test-results/
+            coverage/
+            package-lock.json
+          if-no-files-found: warn
+          retention-days: 14

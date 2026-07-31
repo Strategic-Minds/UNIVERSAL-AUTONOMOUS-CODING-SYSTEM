@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import './responsive.css'
 import Sidebar from '@/components/uacs/Sidebar'
-import TopBar from '@/components/uacs/TopBar'
 
 export const metadata: Metadata = {
   title: 'UACS Project',
