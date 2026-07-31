@@ -28,4 +28,10 @@ export default [
       "@next/next/no-html-link-for-pages": "off",
     },
   },
+  {
+    files: ["tests/**/*.cjs", "jest.config.cjs"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
 ];
