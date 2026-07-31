@@ -38,10 +38,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: npm
 
-      - name: Install locked dependencies
-        run: npm ci --legacy-peer-deps
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
 
       - name: TypeScript
         run: npm run typecheck
@@ -76,5 +75,6 @@ jobs:
             playwright-report/
             test-results/
             coverage/
+            package-lock.json
           if-no-files-found: warn
           retention-days: 14
