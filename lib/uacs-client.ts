@@ -68,6 +68,11 @@ export async function runFAANGValidation(previewUrl: string): Promise<{
   total: number
   pass: boolean
 }> {
-  // Stub — replace with actual BrowserWorker + PageSpeed calls
-  return { code_quality: 24, visual_parity: 23, functional: 25, performance: 22, total: 94, pass: true }
+  // No score is trusted until an independent, receipt-backed validator is connected.
+  // Fail closed instead of reporting a synthetic passing QA score.
+  void previewUrl;
+  return {
+    code_quality: 0, visual_parity: 0, functional: 0,
+    performance: 0, total: 0, pass: false,
+  }
 }

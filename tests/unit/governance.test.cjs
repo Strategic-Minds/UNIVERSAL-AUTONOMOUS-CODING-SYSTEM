@@ -8,32 +8,47 @@ describe("UACS validation governance", () => {
   test("package scripts are fail-closed", () => {
     const pkg = JSON.parse(read("package.json"));
     const scripts = Object.values(pkg.scripts).join("\n");
-
     expect(scripts).not.toMatch(/\|\|\s*true/);
     expect(pkg.scripts.typecheck).toBe("tsc --noEmit");
     expect(pkg.scripts["test:e2e"]).toContain("playwright test");
     expect(pkg.scripts["test:visual"]).toContain("playwright test");
     expect(pkg.scripts["test:security"]).toContain("audit-level=high");
   });
-
   test("CI does not suppress validation failures", () => {
     const workflow = read(".github/workflows/faang-qa-gate.yml");
-
     expect(workflow).not.toMatch(/\|\|\s*true/);
     expect(workflow).not.toMatch(/continue-on-error:\s*true/);
     expect(workflow).toContain("npm run typecheck");
     expect(workflow).toContain("npm run test:e2e");
     expect(workflow).toContain("npm run test:visual");
   });
-
   test("browser evidence is retained when validation fails", () => {
     const config = read("playwright.config.ts");
-
     expect(config).toContain('trace: "retain-on-failure"');
     expect(config).toContain('screenshot: "only-on-failure"');
     expect(config).toContain('video: "retain-on-failure"');
     expect(config).toContain('name: "desktop-chromium"');
     expect(config).toContain('name: "tablet-chromium"');
     expect(config).toContain('name: "mobile-chromium"');
+  });
+  test("webhook cannot turn a submitted score into permission to deploy", () => {
+    const webhook = read("app/api/webhook/route.ts");
+    expect(webhook).toContain("faang_passed: false");
+    expect(webhook).toContain("ship_it: false");
+    expect(webhook).not.toMatch(/status:\s*'deploy'/);
+    expect(webhook).not.toMatch(/\.{3}data/);
+  });
+  test("bridge and queue are not public mutation surfaces", () => {
+    const auth = read("lib/server/require-token.ts");
+    expect(auth).toContain("timingSafeEqual");
+    expect(auth).toContain("status: 503");
+    expect(read("app/api/bridge/route.ts")).toContain("requireServerToken");
+    expect(read("app/api/queue/route.ts")).toContain("UACS_OPERATOR_TOKEN");
+    expect(read("app/api/bridge/route.ts")).not.toContain("queued_locally");
+  });
+  test("synthetic scoring never reports a passing release gate", () => {
+    const client = read("lib/uacs-client.ts");
+    expect(client).not.toMatch(/total:\s*94,\s*pass:\s*true/);
+    expect(client).toContain("pass: false");
   });
 });
